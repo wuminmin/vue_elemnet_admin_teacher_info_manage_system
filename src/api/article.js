@@ -1,8 +1,20 @@
 import request from '@/utils/request'
+import module from '@/settings'
+
+export function baseInfofetchList(query) {
+  return request({
+    // url: '/vue-element-admin/article/list',
+    url:module.teacher_base_url+'base_table_fetchList',
+    method: 'get',
+    params: query
+  })
+}
+
 
 export function fetchList(query) {
   return request({
     url: '/vue-element-admin/article/list',
+    // url:module.teacher_base_url+'base_table_fetchList',
     method: 'get',
     params: query
   })
