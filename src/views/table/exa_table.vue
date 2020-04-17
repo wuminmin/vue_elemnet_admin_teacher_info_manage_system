@@ -19,7 +19,7 @@
       </el-select>
       <el-input
         v-model="listQuery.department"
-        placeholder="姓名"
+        placeholder="考核开始日期"
         style="width: 200px;"
         class="filter-item"
         @keyup.enter.native="handleFilter"
@@ -35,7 +35,7 @@
       </el-select>
       <el-input
         v-model="listQuery.job_sequence"
-        placeholder="性别"
+        placeholder="考核结束日期"
         style="width: 200px;"
         class="filter-item"
         @keyup.enter.native="handleFilter"
@@ -51,7 +51,7 @@
       </el-select>
       <el-input
         v-model="listQuery.job_name"
-        placeholder="出生日期"
+        placeholder="考核单位"
         style="width: 200px;"
         class="filter-item"
         @keyup.enter.native="handleFilter"
@@ -67,7 +67,7 @@
       </el-select>
       <el-input
         v-model="listQuery.job_date"
-        placeholder="民族"
+        placeholder="考核等级"
         style="width: 200px;"
         class="filter-item"
         @keyup.enter.native="handleFilter"
@@ -81,237 +81,7 @@
       >
         <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
       </el-select>
-      <el-input
-        v-model="listQuery.job_date"
-        placeholder="身份证"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.job_date_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-input
-        v-model="listQuery.job_date"
-        placeholder="籍贯"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.job_date_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-input
-        v-model="listQuery.job_date"
-        placeholder="政治面貌"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.job_date_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-input
-        v-model="listQuery.job_date"
-        placeholder="入党日期"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.job_date_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-input
-        v-model="listQuery.job_date"
-        placeholder="参加工作日"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.job_date_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-input
-        v-model="listQuery.job_date"
-        placeholder="婚姻状况"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.job_date_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-input
-        v-model="listQuery.job_date"
-        placeholder="出身地"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.job_date_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-input
-        v-model="listQuery.job_date"
-        placeholder="户口所在地"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.job_date_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-input
-        v-model="listQuery.job_date"
-        placeholder="办公电话"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-for="item in search_condition"
-        :key="item"
-        v-model="listQuery.job_date_condition"
-        placeholder="条件"
-        clearable
 
-        style="width: 90px"
-        class="filter-item"
-        <el-option
-        :label="item"
-        :value="item"
-      />
-      </el-select>
-      >
-      <el-input
-        v-model="listQuery.job_date"
-        placeholder="手机号码"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.job_date_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-input
-        v-model="listQuery.job_date"
-        placeholder="电子邮件"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.job_date_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-input
-        v-model="listQuery.job_date"
-        placeholder="紧急联系人"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.job_date_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-input
-        v-model="listQuery.job_date"
-        placeholder="紧急联系人电话"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.job_date_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-input
-        v-model="listQuery.working_time"
-        placeholder="任现职岗位等级时间"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.working_time_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
       <!-- <el-select v-model="listQuery.type" placeholder="Type" clearable class="filter-item" style="width: 130px">
         <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key" />
       </el-select>
