@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input
+      <!-- <el-input
         v-model="listQuery.identity_number"
         placeholder="ID"
         style="width: 200px;"
@@ -18,14 +18,14 @@
         <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
       </el-select>
       <el-input
-        v-model="listQuery.department"
+        v-model="listQuery.name"
         placeholder="姓名"
         style="width: 200px;"
         class="filter-item"
         @keyup.enter.native="handleFilter"
       />
       <el-select
-        v-model="listQuery.department_condition"
+        v-model="listQuery.name_condition"
         placeholder="条件"
         clearable
         style="width: 90px"
@@ -34,14 +34,14 @@
         <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
       </el-select>
       <el-input
-        v-model="listQuery.job_sequence"
+        v-model="listQuery.gender"
         placeholder="性别"
         style="width: 200px;"
         class="filter-item"
         @keyup.enter.native="handleFilter"
       />
       <el-select
-        v-model="listQuery.job_sequence_condition"
+        v-model="listQuery.gender_condition"
         placeholder="条件"
         clearable
         style="width: 90px"
@@ -50,14 +50,14 @@
         <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
       </el-select>
       <el-input
-        v-model="listQuery.job_name"
+        v-model="listQuery.birthday"
         placeholder="出生日期"
         style="width: 200px;"
         class="filter-item"
         @keyup.enter.native="handleFilter"
       />
       <el-select
-        v-model="listQuery.job_name_condition"
+        v-model="listQuery.birthday_condition"
         placeholder="条件"
         clearable
         style="width: 90px"
@@ -66,14 +66,14 @@
         <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
       </el-select>
       <el-input
-        v-model="listQuery.job_date"
+        v-model="listQuery.nation"
         placeholder="民族"
         style="width: 200px;"
         class="filter-item"
         @keyup.enter.native="handleFilter"
       />
       <el-select
-        v-model="listQuery.job_date_condition"
+        v-model="listQuery.nation_condition"
         placeholder="条件"
         clearable
         style="width: 90px"
@@ -82,14 +82,14 @@
         <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
       </el-select>
       <el-input
-        v-model="listQuery.job_date"
+        v-model="listQuery.id_card"
         placeholder="身份证"
         style="width: 200px;"
         class="filter-item"
         @keyup.enter.native="handleFilter"
       />
       <el-select
-        v-model="listQuery.job_date_condition"
+        v-model="listQuery.id_card_condition"
         placeholder="条件"
         clearable
         style="width: 90px"
@@ -98,14 +98,14 @@
         <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
       </el-select>
       <el-input
-        v-model="listQuery.job_date"
+        v-model="listQuery.hometown"
         placeholder="籍贯"
         style="width: 200px;"
         class="filter-item"
         @keyup.enter.native="handleFilter"
       />
       <el-select
-        v-model="listQuery.job_date_condition"
+        v-model="listQuery.hometown_condition"
         placeholder="条件"
         clearable
         style="width: 90px"
@@ -114,14 +114,14 @@
         <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
       </el-select>
       <el-input
-        v-model="listQuery.job_date"
+        v-model="listQuery.political_status"
         placeholder="政治面貌"
         style="width: 200px;"
         class="filter-item"
         @keyup.enter.native="handleFilter"
       />
       <el-select
-        v-model="listQuery.job_date_condition"
+        v-model="listQuery.political_status_condition"
         placeholder="条件"
         clearable
         style="width: 90px"
@@ -130,14 +130,14 @@
         <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
       </el-select>
       <el-input
-        v-model="listQuery.job_date"
+        v-model="listQuery.join_party_date"
         placeholder="入党日期"
         style="width: 200px;"
         class="filter-item"
         @keyup.enter.native="handleFilter"
       />
       <el-select
-        v-model="listQuery.job_date_condition"
+        v-model="listQuery.join_party_date_condition"
         placeholder="条件"
         clearable
         style="width: 90px"
@@ -146,14 +146,14 @@
         <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
       </el-select>
       <el-input
-        v-model="listQuery.job_date"
-        placeholder="参加工作日"
+        v-model="listQuery.join_work_day"
+        placeholder="参加工作日期"
         style="width: 200px;"
         class="filter-item"
         @keyup.enter.native="handleFilter"
       />
       <el-select
-        v-model="listQuery.job_date_condition"
+        v-model="listQuery.join_work_day_condition"
         placeholder="条件"
         clearable
         style="width: 90px"
@@ -162,14 +162,14 @@
         <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
       </el-select>
       <el-input
-        v-model="listQuery.job_date"
+        v-model="listQuery.marital_status"
         placeholder="婚姻状况"
         style="width: 200px;"
         class="filter-item"
         @keyup.enter.native="handleFilter"
       />
       <el-select
-        v-model="listQuery.job_date_condition"
+        v-model="listQuery.marital_status_condition"
         placeholder="条件"
         clearable
         style="width: 90px"
@@ -178,14 +178,14 @@
         <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
       </el-select>
       <el-input
-        v-model="listQuery.job_date"
+        v-model="listQuery.birth_location"
         placeholder="出身地"
         style="width: 200px;"
         class="filter-item"
         @keyup.enter.native="handleFilter"
       />
       <el-select
-        v-model="listQuery.job_date_condition"
+        v-model="listQuery.birth_location_condition"
         placeholder="条件"
         clearable
         style="width: 90px"
@@ -194,14 +194,14 @@
         <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
       </el-select>
       <el-input
-        v-model="listQuery.job_date"
+        v-model="listQuery.hukou_location"
         placeholder="户口所在地"
         style="width: 200px;"
         class="filter-item"
         @keyup.enter.native="handleFilter"
       />
       <el-select
-        v-model="listQuery.job_date_condition"
+        v-model="listQuery.hukou_location_condition"
         placeholder="条件"
         clearable
         style="width: 90px"
@@ -210,36 +210,30 @@
         <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
       </el-select>
       <el-input
-        v-model="listQuery.job_date"
+        v-model="listQuery.work_tel"
         placeholder="办公电话"
         style="width: 200px;"
         class="filter-item"
         @keyup.enter.native="handleFilter"
       />
       <el-select
-        v-for="item in search_condition"
-        :key="item"
-        v-model="listQuery.job_date_condition"
+        v-model="listQuery.work_tel_condition"
         placeholder="条件"
         clearable
-
         style="width: 90px"
         class="filter-item"
-        <el-option
-        :label="item"
-        :value="item"
-      />
-      </el-select>
       >
+        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
+      </el-select>
       <el-input
-        v-model="listQuery.job_date"
+        v-model="listQuery.phone"
         placeholder="手机号码"
         style="width: 200px;"
         class="filter-item"
         @keyup.enter.native="handleFilter"
       />
       <el-select
-        v-model="listQuery.job_date_condition"
+        v-model="listQuery.phone_condition"
         placeholder="条件"
         clearable
         style="width: 90px"
@@ -248,14 +242,14 @@
         <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
       </el-select>
       <el-input
-        v-model="listQuery.job_date"
+        v-model="listQuery.email"
         placeholder="电子邮件"
         style="width: 200px;"
         class="filter-item"
         @keyup.enter.native="handleFilter"
       />
       <el-select
-        v-model="listQuery.job_date_condition"
+        v-model="listQuery.email_condition"
         placeholder="条件"
         clearable
         style="width: 90px"
@@ -264,14 +258,14 @@
         <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
       </el-select>
       <el-input
-        v-model="listQuery.job_date"
+        v-model="listQuery.emergency_contact"
         placeholder="紧急联系人"
         style="width: 200px;"
         class="filter-item"
         @keyup.enter.native="handleFilter"
       />
       <el-select
-        v-model="listQuery.job_date_condition"
+        v-model="listQuery.emergency_contact_condition"
         placeholder="条件"
         clearable
         style="width: 90px"
@@ -280,38 +274,37 @@
         <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
       </el-select>
       <el-input
-        v-model="listQuery.job_date"
+        v-model="listQuery.emergency_contact_phone"
         placeholder="紧急联系人电话"
         style="width: 200px;"
         class="filter-item"
         @keyup.enter.native="handleFilter"
       />
       <el-select
-        v-model="listQuery.job_date_condition"
+        v-model="listQuery.emergency_contact_phone_condition"
         placeholder="条件"
         clearable
         style="width: 90px"
         class="filter-item"
       >
-
         <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
       </el-select>
       <el-input
-        v-model="listQuery.working_time"
+        v-model="listQuery.time_of_current_job_level"
         placeholder="任现职岗位等级时间"
         style="width: 200px;"
         class="filter-item"
         @keyup.enter.native="handleFilter"
       />
       <el-select
-        v-model="listQuery.working_time_condition"
+        v-model="listQuery.time_of_current_job_level_condition"
         placeholder="条件"
         clearable
         style="width: 90px"
         class="filter-item"
       >
         <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
+      </el-select> -->
       <!-- <el-select v-model="listQuery.type" placeholder="Type" clearable class="filter-item" style="width: 130px">
         <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key" />
       </el-select>
@@ -366,97 +359,40 @@
         <template slot-scope="{row}">
           <span>{{ row.id }}</span>
         </template>
-      </el-table-column> -->
-      <el-table-column label="身份证" width="" align="center">
+      </el-table-column>-->
+      <el-table-column label="身份证" width align="center">
         <template slot-scope="{row}">
           <span>{{ row.d.identity_number }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="学校" width="" align="center">
+      <el-table-column label="学校" width align="center">
         <template slot-scope="{row}">
           <span>{{ row.d.department }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="岗位序列" width="" align="center">
+      <el-table-column label="岗位序列" width align="center">
         <template slot-scope="{row}">
           <span>{{ row.d.job_sequence }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="岗位名称" width="" align="center">
+      <el-table-column label="岗位名称" width align="center">
         <template slot-scope="{row}">
           <span>{{ row.d.job_name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="现职时间" width="" align="center">
+      <el-table-column label="现职时间" width align="center">
         <template slot-scope="{row}">
           <span>{{ row.d.job_date }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="任现职岗位等级时间" width="" align="center">
+      <el-table-column label="任现职岗位等级时间" width align="center">
         <template slot-scope="{row}">
           <span>{{ row.d.working_time }}</span>
         </template>
       </el-table-column>
-      <!-- <el-table-column label="Title" min-width="150px">
-        <template slot-scope="{row}">
-          <span class="link-type" @click="handleUpdate(row)">{{ row.title }}</span>
-          <el-tag>{{ row.type | typeFilter }}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column label="Author" width="110px" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.author }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column v-if="showReviewer" label="Reviewer" width="110px" align="center">
-        <template slot-scope="{row}">
-          <span style="color:red;">{{ row.reviewer }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="Imp" width="80px">
-        <template slot-scope="{row}">
-          <svg-icon
-            v-for="n in + row.importance"
-            :key="n"
-            icon-class="star"
-            class="meta-item__icon"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column label="Readings" align="center" width="95">
-        <template slot-scope="{row}">
-          <span
-            v-if="row.pageviews"
-            class="link-type"
-            @click="handleFetchPv(row.pageviews)"
-          >{{ row.pageviews }}</span>
-          <span v-else>0</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="Status" class-name="status-col" width="100">
-        <template slot-scope="{row}">
-          <el-tag :type="row.status | statusFilter">{{ row.status }}</el-tag>
-        </template>
-      </el-table-column> -->
-      <el-table-column
-        label="操作"
-        align="center"
-        width="230"
-        class-name="small-padding fixed-width"
-      >
+      <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
           <el-button type="primary" size="mini" @click="handleUpdate(row)">编辑</el-button>
-          <!-- <el-button
-            v-if="row.status!='published'"
-            size="mini"
-            type="success"
-            @click="handleModifyStatus(row,'published')"
-          >Publish</el-button>
-          <el-button
-            v-if="row.status!='draft'"
-            size="mini"
-            @click="handleModifyStatus(row,'draft')"
-          >Draft</el-button> -->
           <el-button
             v-if="row.status!='deleted'"
             size="mini"
@@ -550,269 +486,288 @@ import {
   fetchPv,
   createArticle,
   updateArticle
-} from '@/api/article'
-import waves from '@/directive/waves' // waves directive
-import { parseTime } from '@/utils'
-import Pagination from '@/components/Pagination' // secondary package based on el-pagination
+} from "@/api/article";
+import waves from "@/directive/waves"; // waves directive
+import { parseTime } from "@/utils";
+import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
 
 const calendarTypeOptions = [
-  { key: 'CN', display_name: 'China' },
-  { key: 'US', display_name: 'USA' },
-  { key: 'JP', display_name: 'Japan' },
-  { key: 'EU', display_name: 'Eurozone' }
-]
+  { key: "CN", display_name: "China" },
+  { key: "US", display_name: "USA" },
+  { key: "JP", display_name: "Japan" },
+  { key: "EU", display_name: "Eurozone" }
+];
 
 // arr to obj, such as { CN : "China", US : "USA" }
 const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
-  acc[cur.key] = cur.display_name
-  return acc
-}, {})
+  acc[cur.key] = cur.display_name;
+  return acc;
+}, {});
 
 export default {
-  name: 'BaseTable',
+  name: "BaseTable",
   components: { Pagination },
   directives: { waves },
   filters: {
     statusFilter(status) {
       const statusMap = {
-        published: 'success',
-        draft: 'info',
-        deleted: 'danger'
-      }
-      return statusMap[status]
+        published: "success",
+        draft: "info",
+        deleted: "danger"
+      };
+      return statusMap[status];
     },
     typeFilter(type) {
-      return calendarTypeKeyValue[type]
+      return calendarTypeKeyValue[type];
     }
   },
   data() {
     return {
-      search_condition: ['等于', '大于', '小于', '包含'],
+      search_condition: ["等于", "大于", "小于", "包含", "不包含"],
       tableKey: 0,
       list: null,
       total: 0,
       listLoading: false,
       listQuery: {
-        identity_number: '',
-        department: '',
-        job_sequence: '',
-        job_name: '',
-        job_date: '',
-        working_time: '',
-        identity_number_condition: '',
-        department_condition: '',
-        job_sequence_condition: '',
-        job_name_condition: '',
-        job_date_condition: '',
-        working_time_condition: ''
-        // job_day:'',
-        // page: 1,
-        // limit: 20,
-        // importance: undefined,
-        // title: undefined,
-        // type: undefined,
-        // sort: '+id'
+        identity_number: "",
+        identity_number_condition: "",
+        name: "",
+        name_condition: "",
+        gender: "",
+        gender_condition: "",
+        birthday: "",
+        birthday_condition: "",
+        nation: "",
+        nation_condition: "",
+        id_card: "",
+        id_card_condition: "",
+        hometown: "",
+        hometown_condition: "",
+        political_status: "",
+        political_status_condition: "",
+        join_party_date: "",
+        join_party_date_condition: "",
+        join_work_day: "",
+        join_work_day_condition: "",
+        marital_status: "",
+        marital_status_condition: "",
+        birth_location: "",
+        birth_location_condition: "",
+        hukou_location: "",
+        hukou_location_condition: "",
+        work_tel: "",
+        work_tel_condition: "",
+        phone: "",
+        phone_condition: "",
+        email: "",
+        email_condition: "",
+        emergency_contact: "",
+        emergency_contact_condition: "",
+        emergency_contact_phone: "",
+        emergency_contact_phone_condition: "",
+        time_of_current_job_level: "",
+        time_of_current_job_level_condition: ""
       },
       importanceOptions: [1, 2, 3],
       calendarTypeOptions,
       sortOptions: [
-        { label: 'ID Ascending', key: '+id' },
-        { label: 'ID Descending', key: '-id' }
+        { label: "ID Ascending", key: "+id" },
+        { label: "ID Descending", key: "-id" }
       ],
-      statusOptions: ['published', 'draft', 'deleted'],
+      statusOptions: ["published", "draft", "deleted"],
       showReviewer: false,
       temp: {
         id: undefined,
         importance: 1,
-        remark: '',
+        remark: "",
         timestamp: new Date(),
-        title: '',
-        type: '',
-        status: 'published'
+        title: "",
+        type: "",
+        status: "published"
       },
       dialogFormVisible: false,
-      dialogStatus: '',
+      dialogStatus: "",
       textMap: {
-        update: 'Edit',
-        create: 'Create'
+        update: "Edit",
+        create: "Create"
       },
       dialogPvVisible: false,
       pvData: [],
       rules: {
         type: [
-          { required: true, message: 'type is required', trigger: 'change' }
+          { required: true, message: "type is required", trigger: "change" }
         ],
         timestamp: [
           {
-            type: 'date',
+            type: "date",
             required: true,
-            message: 'timestamp is required',
-            trigger: 'change'
+            message: "timestamp is required",
+            trigger: "change"
           }
         ],
         title: [
-          { required: true, message: 'title is required', trigger: 'blur' }
+          { required: true, message: "title is required", trigger: "blur" }
         ]
       },
       downloadLoading: false
-    }
+    };
   },
   created() {
     // this.getList()
   },
   methods: {
     getList() {
-      this.listLoading = true
+      this.listLoading = true;
       baseInfofetchList({ listQuery: this.listQuery }).then(response => {
-        this.list = response.data.items
-        this.total = response.data.total
+        this.list = response.data.items;
+        this.total = response.data.total;
 
         // Just to simulate the time of the request
         setTimeout(() => {
-          this.listLoading = false
-        }, 1.5 * 1000)
-      })
+          this.listLoading = false;
+        }, 1.5 * 1000);
+      });
     },
     handleFilter() {
       // this.listQuery.page = 1
-      this.getList()
+      this.getList();
     },
     handleModifyStatus(row, status) {
       this.$message({
-        message: '操作Success',
-        type: 'success'
-      })
-      row.status = status
+        message: "操作Success",
+        type: "success"
+      });
+      row.status = status;
     },
     sortChange(data) {
-      const { prop, order } = data
-      if (prop === 'id') {
-        this.sortByID(order)
+      const { prop, order } = data;
+      if (prop === "id") {
+        this.sortByID(order);
       }
     },
     sortByID(order) {
-      if (order === 'ascending') {
-        this.listQuery.sort = '+id'
+      if (order === "ascending") {
+        this.listQuery.sort = "+id";
       } else {
-        this.listQuery.sort = '-id'
+        this.listQuery.sort = "-id";
       }
-      this.handleFilter()
+      this.handleFilter();
     },
     resetTemp() {
       this.temp = {
         id: undefined,
         importance: 1,
-        remark: '',
+        remark: "",
         timestamp: new Date(),
-        title: '',
-        status: 'published',
-        type: ''
-      }
+        title: "",
+        status: "published",
+        type: ""
+      };
     },
     handleCreate() {
-      this.resetTemp()
-      this.dialogStatus = 'create'
-      this.dialogFormVisible = true
+      this.resetTemp();
+      this.dialogStatus = "create";
+      this.dialogFormVisible = true;
       this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
-      })
+        this.$refs["dataForm"].clearValidate();
+      });
     },
     createData() {
-      this.$refs['dataForm'].validate(valid => {
+      this.$refs["dataForm"].validate(valid => {
         if (valid) {
-          this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
-          this.temp.author = 'vue-element-admin'
+          this.temp.id = parseInt(Math.random() * 100) + 1024; // mock a id
+          this.temp.author = "vue-element-admin";
           createArticle(this.temp).then(() => {
-            this.list.unshift(this.temp)
-            this.dialogFormVisible = false
+            this.list.unshift(this.temp);
+            this.dialogFormVisible = false;
             this.$notify({
-              title: 'Success',
-              message: 'Created Successfully',
-              type: 'success',
+              title: "Success",
+              message: "Created Successfully",
+              type: "success",
               duration: 2000
-            })
-          })
+            });
+          });
         }
-      })
+      });
     },
     handleUpdate(row) {
-      this.temp = Object.assign({}, row) // copy obj
-      this.temp.timestamp = new Date(this.temp.timestamp)
-      this.dialogStatus = 'update'
-      this.dialogFormVisible = true
+      this.temp = Object.assign({}, row); // copy obj
+      this.temp.timestamp = new Date(this.temp.timestamp);
+      this.dialogStatus = "update";
+      this.dialogFormVisible = true;
       this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
-      })
+        this.$refs["dataForm"].clearValidate();
+      });
     },
     updateData() {
-      this.$refs['dataForm'].validate(valid => {
+      this.$refs["dataForm"].validate(valid => {
         if (valid) {
-          const tempData = Object.assign({}, this.temp)
-          tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
+          const tempData = Object.assign({}, this.temp);
+          tempData.timestamp = +new Date(tempData.timestamp); // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
           updateArticle(tempData).then(() => {
-            const index = this.list.findIndex(v => v.id === this.temp.id)
-            this.list.splice(index, 1, this.temp)
-            this.dialogFormVisible = false
+            const index = this.list.findIndex(v => v.id === this.temp.id);
+            this.list.splice(index, 1, this.temp);
+            this.dialogFormVisible = false;
             this.$notify({
-              title: 'Success',
-              message: 'Update Successfully',
-              type: 'success',
+              title: "Success",
+              message: "Update Successfully",
+              type: "success",
               duration: 2000
-            })
-          })
+            });
+          });
         }
-      })
+      });
     },
     handleDelete(row, index) {
       this.$notify({
-        title: 'Success',
-        message: 'Delete Successfully',
-        type: 'success',
+        title: "Success",
+        message: "Delete Successfully",
+        type: "success",
         duration: 2000
-      })
-      this.list.splice(index, 1)
+      });
+      this.list.splice(index, 1);
     },
     handleFetchPv(pv) {
       fetchPv(pv).then(response => {
-        this.pvData = response.data.pvData
-        this.dialogPvVisible = true
-      })
+        this.pvData = response.data.pvData;
+        this.dialogPvVisible = true;
+      });
     },
     handleDownload() {
-      this.downloadLoading = true
-      import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
+      this.downloadLoading = true;
+      import("@/vendor/Export2Excel").then(excel => {
+        const tHeader = ["timestamp", "title", "type", "importance", "status"];
         const filterVal = [
-          'timestamp',
-          'title',
-          'type',
-          'importance',
-          'status'
-        ]
-        const data = this.formatJson(filterVal)
+          "timestamp",
+          "title",
+          "type",
+          "importance",
+          "status"
+        ];
+        const data = this.formatJson(filterVal);
         excel.export_json_to_excel({
           header: tHeader,
           data,
-          filename: 'table-list'
-        })
-        this.downloadLoading = false
-      })
+          filename: "table-list"
+        });
+        this.downloadLoading = false;
+      });
     },
     formatJson(filterVal) {
       return this.list.map(v =>
         filterVal.map(j => {
-          if (j === 'timestamp') {
-            return parseTime(v[j])
+          if (j === "timestamp") {
+            return parseTime(v[j]);
           } else {
-            return v[j]
+            return v[j];
           }
         })
-      )
+      );
     },
     getSortClass: function(key) {
-      const sort = this.listQuery.sort
-      return sort === `+${key}` ? 'ascending' : 'descending'
+      const sort = this.listQuery.sort;
+      return sort === `+${key}` ? "ascending" : "descending";
     }
   }
-}
+};
 </script>

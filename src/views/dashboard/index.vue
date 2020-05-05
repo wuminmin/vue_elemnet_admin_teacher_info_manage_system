@@ -1,6 +1,7 @@
 <template>
   <div class="dashboard-container">
-    <component :is="currentRole" />
+    <!-- <component :is="currentRole" /> -->
+    <h1>贵池区教师信息管理系统</h1>
   </div>
 </template>
 

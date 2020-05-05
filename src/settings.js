@@ -1,6 +1,7 @@
 module.exports = {
 
-  teacher_base_url:'https://wx.wuminmin.top/teacher/',
+  // teacher_base_url:'https://wx.wuminmin.top/teacher/',
+  teacher_base_url:'http://127.0.0.1:80/teacher/',
 
   title: '贵池区教师信息管理系统',
 
