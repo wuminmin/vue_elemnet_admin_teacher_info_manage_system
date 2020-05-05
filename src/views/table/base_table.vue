@@ -1,316 +1,26 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <!-- <el-input
-        v-model="listQuery.identity_number"
-        placeholder="ID"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.identity_number_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-input
-        v-model="listQuery.name"
-        placeholder="姓名"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.name_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-input
-        v-model="listQuery.gender"
-        placeholder="性别"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.gender_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-input
-        v-model="listQuery.birthday"
-        placeholder="出生日期"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.birthday_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-input
-        v-model="listQuery.nation"
-        placeholder="民族"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.nation_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-input
-        v-model="listQuery.id_card"
-        placeholder="身份证"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.id_card_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-input
-        v-model="listQuery.hometown"
-        placeholder="籍贯"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.hometown_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-input
-        v-model="listQuery.political_status"
-        placeholder="政治面貌"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.political_status_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-input
-        v-model="listQuery.join_party_date"
-        placeholder="入党日期"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.join_party_date_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-input
-        v-model="listQuery.join_work_day"
-        placeholder="参加工作日期"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.join_work_day_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-input
-        v-model="listQuery.marital_status"
-        placeholder="婚姻状况"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.marital_status_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-input
-        v-model="listQuery.birth_location"
-        placeholder="出身地"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.birth_location_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-input
-        v-model="listQuery.hukou_location"
-        placeholder="户口所在地"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.hukou_location_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-input
-        v-model="listQuery.work_tel"
-        placeholder="办公电话"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.work_tel_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-input
-        v-model="listQuery.phone"
-        placeholder="手机号码"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.phone_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-input
-        v-model="listQuery.email"
-        placeholder="电子邮件"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.email_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-input
-        v-model="listQuery.emergency_contact"
-        placeholder="紧急联系人"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.emergency_contact_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-input
-        v-model="listQuery.emergency_contact_phone"
-        placeholder="紧急联系人电话"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.emergency_contact_phone_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-input
-        v-model="listQuery.time_of_current_job_level"
-        placeholder="任现职岗位等级时间"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.time_of_current_job_level_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select> -->
-      <!-- <el-select v-model="listQuery.type" placeholder="Type" clearable class="filter-item" style="width: 130px">
-        <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key" />
-      </el-select>
-      <el-select v-model="listQuery.sort" style="width: 140px" class="filter-item" @change="handleFilter">
-        <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
-      </el-select>-->
+      <view v-for="(i,j) in my_filter_list" :key="j">
+        <el-input
+          :v-model="i.input_value"
+          :placeholder="i.input_placeholder"
+          style="width: 200px;"
+          class="filter-item"
+          @keyup.enter.native="handleFilter"
+        />
+        <el-select
+          v-model="i.input_condition"
+          placeholder="条件"
+          clearable
+          style="width: 90px"
+          class="filter-item"
+        >
+          <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
+        </el-select>
+      </view>
+    </div>
+    <div class="filter-container">
       <el-button
         v-waves
         class="filter-item"
@@ -333,11 +43,7 @@
         icon="el-icon-download"
         @click="handleDownload"
       >导出</el-button>
-      <!-- <el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">
-        reviewer
-      </el-checkbox>-->
     </div>
-
     <el-table
       :key="tableKey"
       v-loading="listLoading"
@@ -348,18 +54,6 @@
       style="width: 100%;"
       @sort-change="sortChange"
     >
-      <!-- <el-table-column
-        label="ID"
-        prop="id"
-        sortable="custom"
-        align="center"
-        width="80"
-        :class-name="getSortClass('id')"
-      >
-        <template slot-scope="{row}">
-          <span>{{ row.id }}</span>
-        </template>
-      </el-table-column>-->
       <el-table-column label="身份证" width align="center">
         <template slot-scope="{row}">
           <span>{{ row.d.identity_number }}</span>
@@ -523,6 +217,32 @@ export default {
   },
   data() {
     return {
+      my_filter_list: [
+        {
+          key: "identity_number",
+          input_value: "identity_number",
+          input_placeholder: "编号",
+          input_condition: ""
+        },
+        {
+          key: "name",
+          input_value: "name",
+          input_placeholder: "姓名",
+          input_condition: ""
+        },
+        {
+          key: "gender",
+          input_value: "gender",
+          input_placeholder: "性别",
+          input_condition: ""
+        },
+        {
+          key: "birthday",
+          input_value: "birthday",
+          input_placeholder: "生日",
+          input_condition: ""
+        }
+      ],
       search_condition: ["等于", "大于", "小于", "包含", "不包含"],
       tableKey: 0,
       list: null,
