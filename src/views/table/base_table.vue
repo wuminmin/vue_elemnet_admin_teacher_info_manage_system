@@ -1,24 +1,54 @@
 <template>
   <div class="app-container">
-    <div class="filter-container">
-      <view v-for="(i,j) in my_filter_list" :key="j">
-        <el-input
-          :v-model="i.input_value"
-          :placeholder="i.input_placeholder"
-          style="width: 200px;"
-          class="filter-item"
-          @keyup.enter.native="handleFilter"
-        />
-        <el-select
-          v-model="i.input_condition"
-          placeholder="条件"
-          clearable
-          style="width: 90px"
-          class="filter-item"
-        >
-          <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-        </el-select>
-      </view>
+    <div class="filter-container" v-for="(i,j) in my_filter_list" :key="j">
+      <el-input
+        v-model="my_filter_list[j].input_value"
+        :placeholder="i.input_placeholder"
+        style="width: 200px;"
+        class="filter-item"
+        @keyup.enter.native="handleFilter"
+      />
+      <el-select
+        v-model="my_filter_list[j].input_condition"
+        placeholder="条件"
+        clearable
+        style="width: 90px"
+        class="filter-item"
+      >
+        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
+      </el-select>
+      <el-input
+        v-model="my_filter_list[j].input_value2"
+        :placeholder="i.input_placeholder2"
+        style="width: 200px;"
+        class="filter-item"
+        @keyup.enter.native="handleFilter"
+      />
+      <el-select
+        v-model="my_filter_list[j].input_condition2"
+        placeholder="条件"
+        clearable
+        style="width: 90px"
+        class="filter-item"
+      >
+        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
+      </el-select>
+       <el-input
+        v-model="my_filter_list[j].input_value3"
+        :placeholder="i.input_placeholder3"
+        style="width: 200px;"
+        class="filter-item"
+        @keyup.enter.native="handleFilter"
+      />
+      <el-select
+        v-model="my_filter_list[j].input_condition3"
+        placeholder="条件"
+        clearable
+        style="width: 90px"
+        class="filter-item"
+      >
+        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
+      </el-select>
     </div>
     <div class="filter-container">
       <el-button
@@ -220,28 +250,25 @@ export default {
       my_filter_list: [
         {
           key: "identity_number",
-          input_value: "identity_number",
+          input_value: "",
           input_placeholder: "编号",
-          input_condition: ""
-        },
-        {
-          key: "name",
-          input_value: "name",
-          input_placeholder: "姓名",
-          input_condition: ""
+          input_condition: "",
+          key2: "name",
+          input_value2: "",
+          input_placeholder2: "姓名",
+          input_condition2: "",
+            key3: "birthday",
+          input_value3: "",
+          input_placeholder3: "生日",
+          input_condition3: ""
         },
         {
           key: "gender",
-          input_value: "gender",
+          input_value: "",
           input_placeholder: "性别",
-          input_condition: ""
+          input_condition: "",
+         
         },
-        {
-          key: "birthday",
-          input_value: "birthday",
-          input_placeholder: "生日",
-          input_condition: ""
-        }
       ],
       search_condition: ["等于", "大于", "小于", "包含", "不包含"],
       tableKey: 0,
@@ -338,7 +365,7 @@ export default {
   methods: {
     getList() {
       this.listLoading = true;
-      baseInfofetchList({ listQuery: this.listQuery }).then(response => {
+      baseInfofetchList({ listQuery:{my_filter_list:this.my_filter_list} }).then(response => {
         this.list = response.data.items;
         this.total = response.data.total;
 
