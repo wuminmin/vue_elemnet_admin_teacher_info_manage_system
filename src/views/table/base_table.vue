@@ -127,14 +127,6 @@
       </el-table-column>
     </el-table>
 
-    <pagination
-      v-show="total>0"
-      :total="total"
-      :page.sync="listQuery.page"
-      :limit.sync="listQuery.limit"
-      @pagination="getList"
-    />
-
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form
         ref="dataForm"
@@ -248,73 +240,18 @@ export default {
   data() {
     return {
       my_filter_list: [
-        {
-          key: "identity_number",
-          input_value: "",
-          input_placeholder: "编号",
-          input_condition: "",
-          key2: "name",
-          input_value2: "",
-          input_placeholder2: "姓名",
-          input_condition2: "",
-            key3: "birthday",
-          input_value3: "",
-          input_placeholder3: "生日",
-          input_condition3: ""
-        },
-        {
-          key: "gender",
-          input_value: "",
-          input_placeholder: "性别",
-          input_condition: "",
-         
-        },
+      ],
+      importanceOptions: [1, 2, 3],
+      calendarTypeOptions,
+      sortOptions: [
+        { label: "ID Ascending", key: "+id" },
+        { label: "ID Descending", key: "-id" }
       ],
       search_condition: ["等于", "大于", "小于", "包含", "不包含"],
       tableKey: 0,
       list: null,
       total: 0,
       listLoading: false,
-      listQuery: {
-        identity_number: "",
-        identity_number_condition: "",
-        name: "",
-        name_condition: "",
-        gender: "",
-        gender_condition: "",
-        birthday: "",
-        birthday_condition: "",
-        nation: "",
-        nation_condition: "",
-        id_card: "",
-        id_card_condition: "",
-        hometown: "",
-        hometown_condition: "",
-        political_status: "",
-        political_status_condition: "",
-        join_party_date: "",
-        join_party_date_condition: "",
-        join_work_day: "",
-        join_work_day_condition: "",
-        marital_status: "",
-        marital_status_condition: "",
-        birth_location: "",
-        birth_location_condition: "",
-        hukou_location: "",
-        hukou_location_condition: "",
-        work_tel: "",
-        work_tel_condition: "",
-        phone: "",
-        phone_condition: "",
-        email: "",
-        email_condition: "",
-        emergency_contact: "",
-        emergency_contact_condition: "",
-        emergency_contact_phone: "",
-        emergency_contact_phone_condition: "",
-        time_of_current_job_level: "",
-        time_of_current_job_level_condition: ""
-      },
       importanceOptions: [1, 2, 3],
       calendarTypeOptions,
       sortOptions: [
@@ -361,11 +298,25 @@ export default {
   },
   created() {
     // this.getList()
+    this.init();
   },
   methods: {
+    init(){
+      this.listLoading = true;
+      baseInfofetchList({ code:1,message:'get_my_filter_list',data:{} }).then(response => {
+        this.my_filter_list = response.data.my_filter_list;
+
+        // Just to simulate the time of the request
+        setTimeout(() => {
+          this.listLoading = false;
+        }, 1.5 * 1000);
+      });
+    },
     getList() {
       this.listLoading = true;
-      baseInfofetchList({ listQuery:{my_filter_list:this.my_filter_list} }).then(response => {
+      baseInfofetchList({ 
+        code:2,message:'get_table_data',data:{my_filter_list:this.my_filter_list}
+        }).then(response => {
         this.list = response.data.items;
         this.total = response.data.total;
 
@@ -376,7 +327,6 @@ export default {
       });
     },
     handleFilter() {
-      // this.listQuery.page = 1
       this.getList();
     },
     handleModifyStatus(row, status) {
@@ -391,14 +341,6 @@ export default {
       if (prop === "id") {
         this.sortByID(order);
       }
-    },
-    sortByID(order) {
-      if (order === "ascending") {
-        this.listQuery.sort = "+id";
-      } else {
-        this.listQuery.sort = "-id";
-      }
-      this.handleFilter();
     },
     resetTemp() {
       this.temp = {
@@ -511,10 +453,6 @@ export default {
         })
       );
     },
-    getSortClass: function(key) {
-      const sort = this.listQuery.sort;
-      return sort === `+${key}` ? "ascending" : "descending";
-    }
   }
 };
 </script>
