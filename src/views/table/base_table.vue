@@ -1,15 +1,15 @@
 <template>
   <div class="app-container">
-    <div class="filter-container" v-for="(i,j) in my_filter_list" :key="j">
+    <div class="filter-container" v-for="(filter_item,filter_index) in my_filter_list" :key="filter_index">
       <el-input
-        v-model="my_filter_list[j].input_value"
-        :placeholder="i.input_placeholder"
+        v-model="my_filter_list[filter_index].input_value0"
+        :placeholder="filter_item.input_placeholder0"
         style="width: 200px;"
         class="filter-item"
         @keyup.enter.native="handleFilter"
       />
       <el-select
-        v-model="my_filter_list[j].input_condition"
+        v-model="my_filter_list[filter_index].input_condition0"
         placeholder="条件"
         clearable
         style="width: 90px"
@@ -18,14 +18,14 @@
         <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
       </el-select>
       <el-input
-        v-model="my_filter_list[j].input_value2"
-        :placeholder="i.input_placeholder2"
+        v-model="my_filter_list[filter_index].input_value1"
+        :placeholder="filter_item.input_placeholder1"
         style="width: 200px;"
         class="filter-item"
         @keyup.enter.native="handleFilter"
       />
       <el-select
-        v-model="my_filter_list[j].input_condition2"
+        v-model="my_filter_list[filter_index].input_condition1"
         placeholder="条件"
         clearable
         style="width: 90px"
@@ -34,14 +34,14 @@
         <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
       </el-select>
        <el-input
-        v-model="my_filter_list[j].input_value3"
-        :placeholder="i.input_placeholder3"
+        v-model="my_filter_list[filter_index].input_value2"
+        :placeholder="filter_item.input_placeholder2"
         style="width: 200px;"
         class="filter-item"
         @keyup.enter.native="handleFilter"
       />
       <el-select
-        v-model="my_filter_list[j].input_condition3"
+        v-model="my_filter_list[filter_index].input_condition2"
         placeholder="条件"
         clearable
         style="width: 90px"
@@ -84,103 +84,48 @@
       style="width: 100%;"
       @sort-change="sortChange"
     >
-      <el-table-column label="身份证" width align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.d.identity_number }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="学校" width align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.d.department }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="岗位序列" width align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.d.job_sequence }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="岗位名称" width align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.d.job_name }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="现职时间" width align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.d.job_date }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="任现职岗位等级时间" width align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.d.working_time }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
+    <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
-          <el-button type="primary" size="mini" @click="handleUpdate(row)">编辑</el-button>
+          <el-button type="primary" size="mini" @click="handle_update(row)">编辑</el-button>
           <el-button
             v-if="row.status!='deleted'"
             size="mini"
             type="danger"
-            @click="handleDelete(row,$index)"
+            @click="handle_delete(row,$index)"
           >删除</el-button>
         </template>
       </el-table-column>
+
+      <el-table-column
+       v-for="table_column_item in my_table_header_list" :key="'table_column'+table_column_item.id"
+       :label="table_column_item.name" width align="center" >
+        <template slot-scope="{row}">
+          <span>{{ row.d[table_column_item.key] }}</span>
+        </template>
+      </el-table-column>
+      
     </el-table>
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form
         ref="dataForm"
-        :rules="rules"
-        :model="temp"
+        :rules="my_rules"
+        :model="my_temp"
         label-position="left"
         label-width="70px"
         style="width: 400px; margin-left:50px;"
       >
-        <el-form-item label="Type" prop="type">
-          <el-select v-model="temp.type" class="filter-item" placeholder="Please select">
-            <el-option
-              v-for="item in calendarTypeOptions"
-              :key="item.key"
-              :label="item.display_name"
-              :value="item.key"
-            />
-          </el-select>
+
+        <el-form-item 
+         v-for="(dialog_item,dialog_index) in my_table_header_list" :key="'dialog_'+dialog_index"
+        :label="dialog_item.name" prop="title">
+          <el-input v-model="my_temp[dialog_item.key]" />
         </el-form-item>
-        <el-form-item label="Date" prop="timestamp">
-          <el-date-picker
-            v-model="temp.timestamp"
-            type="datetime"
-            placeholder="Please pick a date"
-          />
-        </el-form-item>
-        <el-form-item label="Title" prop="title">
-          <el-input v-model="temp.title" />
-        </el-form-item>
-        <el-form-item label="Status">
-          <el-select v-model="temp.status" class="filter-item" placeholder="Please select">
-            <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="Imp">
-          <el-rate
-            v-model="temp.importance"
-            :colors="['#99A9BF', '#F7BA2A', '#FF9900']"
-            :max="3"
-            style="margin-top:8px;"
-          />
-        </el-form-item>
-        <el-form-item label="Remark">
-          <el-input
-            v-model="temp.remark"
-            :autosize="{ minRows: 2, maxRows: 4}"
-            type="textarea"
-            placeholder="Please input"
-          />
-        </el-form-item>
+      
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">Confirm</el-button>
+        <el-button @click="dialogFormVisible = false">取消</el-button>
+        <el-button type="primary" @click="dialogStatus==='create'?create_data():update_data()">确认</el-button>
       </div>
     </el-dialog>
 
@@ -249,6 +194,7 @@ export default {
       ],
       search_condition: ["等于", "大于", "小于", "包含", "不包含"],
       tableKey: 0,
+      my_table_header_list:[],
       list: null,
       total: 0,
       listLoading: false,
@@ -269,14 +215,35 @@ export default {
         type: "",
         status: "published"
       },
+      my_temp: {
+        // main_id: '',
+        // name: '',
+        // gender: '',
+        // birth_day: '',
+        // nation: '',
+        // identity_number: '',
+        // birth_area: '',
+        // political_status: '',
+        // join_party_day: '',
+        // join_work_day: '',
+        // marital_status: '',
+        // birth_place: '',
+        // hu_kou_location: '',
+        // work_phone: '',
+        // cell_phone: '',
+        // email: '',
+        // emergency_contact_name: '',
+        // emergency_contact_phone:'',
+      },
       dialogFormVisible: false,
       dialogStatus: "",
       textMap: {
-        update: "Edit",
-        create: "Create"
+        update: "修改",
+        create: "新增"
       },
       dialogPvVisible: false,
       pvData: [],
+      my_rules:{},
       rules: {
         type: [
           { required: true, message: "type is required", trigger: "change" }
@@ -301,10 +268,31 @@ export default {
     this.init();
   },
   methods: {
+    create_data(){
+      console.log('create_data',this.my_temp)
+      baseInfofetchList({ code:1,message:'初始化基本信息表筛选条件',data:{} }).then(response => {
+        this.my_filter_list = response.data.my_filter_list;
+        this.my_table_header_list = response.data.my_table_header_list;
+      });
+    },
+    handle_update(row){
+      console.log(row)
+      this.my_temp = Object.assign({}, row.d); // copy obj
+      // this.my_temp.timestamp = new Date(this.temp.timestamp);
+      this.dialogStatus = "update";
+      this.dialogFormVisible = true;
+      // this.$nextTick(() => {
+      //   this.$refs["dataForm"].clearValidate();
+      // });
+    },
+    update_data(){
+      console.log('update_data',this.my_temp)
+    },
     init(){
       this.listLoading = true;
-      baseInfofetchList({ code:1,message:'get_my_filter_list',data:{} }).then(response => {
+      baseInfofetchList({ code:1,message:'初始化基本信息表筛选条件',data:{} }).then(response => {
         this.my_filter_list = response.data.my_filter_list;
+        this.my_table_header_list = response.data.my_table_header_list;
 
         // Just to simulate the time of the request
         setTimeout(() => {
@@ -315,9 +303,9 @@ export default {
     getList() {
       this.listLoading = true;
       baseInfofetchList({ 
-        code:2,message:'get_table_data',data:{my_filter_list:this.my_filter_list}
+        code:2,message:'查询基本信息表信息',data:{}
         }).then(response => {
-        this.list = response.data.items;
+        this.list = response.data.my_table_list;
         this.total = response.data.total;
 
         // Just to simulate the time of the request
@@ -405,6 +393,15 @@ export default {
             });
           });
         }
+      });
+    },
+    handle_delete(row, index){
+      this.temp = Object.assign({}, row); // copy obj
+      this.temp.timestamp = new Date(this.temp.timestamp);
+      this.dialogStatus = "delete";
+      this.dialogFormVisible = true;
+      this.$nextTick(() => {
+        this.$refs["dataForm"].clearValidate();
       });
     },
     handleDelete(row, index) {
