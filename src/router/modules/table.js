@@ -43,6 +43,7 @@ const tableRouter = {
       meta: { title: '基本信息' }
     },
 
+     
     {
       path: 'work_table',
       component: () => import('@/views/table/work_table'),

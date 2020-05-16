@@ -1,92 +1,60 @@
 <template>
   <div class="app-container">
+    <div
+      class="filter-container"
+      v-for="(filter_item,filter_index) in my_filter_list"
+      :key="filter_index"
+    >
+      <el-input
+        v-model="my_filter_list[filter_index].input_value0"
+        :placeholder="filter_item.input_placeholder0"
+        style="width: 200px;"
+        class="filter-item"
+        @keyup.enter.native="handleFilter"
+      />
+      <el-select
+        v-model="my_filter_list[filter_index].input_condition0"
+        placeholder="条件"
+        clearable
+        style="width: 90px"
+        class="filter-item"
+      >
+        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
+      </el-select>
+      <el-input
+        v-model="my_filter_list[filter_index].input_value1"
+        :placeholder="filter_item.input_placeholder1"
+        style="width: 200px;"
+        class="filter-item"
+        @keyup.enter.native="handleFilter"
+      />
+      <el-select
+        v-model="my_filter_list[filter_index].input_condition1"
+        placeholder="条件"
+        clearable
+        style="width: 90px"
+        class="filter-item"
+      >
+        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
+      </el-select>
+      <el-input
+        v-model="my_filter_list[filter_index].input_value2"
+        :placeholder="filter_item.input_placeholder2"
+        style="width: 200px;"
+        class="filter-item"
+        @keyup.enter.native="handleFilter"
+      />
+      <el-select
+        v-model="my_filter_list[filter_index].input_condition2"
+        placeholder="条件"
+        clearable
+        style="width: 90px"
+        class="filter-item"
+      >
+        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
+      </el-select>
+    </div>
     <div class="filter-container">
-      <el-input
-        v-model="listQuery.identity_number"
-        placeholder="ID"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.identity_number_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-input
-        v-model="listQuery.department"
-        placeholder="职业资格名称"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.department_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-input
-        v-model="listQuery.job_sequence"
-        placeholder="取得时间"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.job_sequence_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-input
-        v-model="listQuery.job_name"
-        placeholder="资格等级"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.job_name_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-input
-        v-model="listQuery.job_date"
-        placeholder="批准单位"
-        style="width: 200px;"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-      <el-select
-        v-model="listQuery.job_date_condition"
-        placeholder="条件"
-        clearable
-        style="width: 90px"
-        class="filter-item"
-      >
-        <el-option v-for="item in search_condition" :key="item" :label="item" :value="item" />
-      </el-select>
-      <!-- <el-select v-model="listQuery.type" placeholder="Type" clearable class="filter-item" style="width: 130px">
-        <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key" />
-      </el-select>
-      <el-select v-model="listQuery.sort" style="width: 140px" class="filter-item" @change="handleFilter">
-        <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
-      </el-select>-->
       <el-button
         v-waves
         class="filter-item"
@@ -99,7 +67,7 @@
         style="margin-left: 10px;"
         type="primary"
         icon="el-icon-edit"
-        @click="handleCreate"
+        @click="handle_create"
       >新增</el-button>
       <el-button
         v-waves
@@ -109,11 +77,15 @@
         icon="el-icon-download"
         @click="handleDownload"
       >导出</el-button>
-      <!-- <el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">
-        reviewer
-      </el-checkbox>-->
+      <!-- <el-button
+        v-waves
+        :loading="saveloadLoading"
+        class="filter-item"
+        type="danger"
+        icon="el-icon-upload"
+        @click="handle_import"
+      >导入</el-button>-->
     </div>
-
     <el-table
       :key="tableKey"
       v-loading="listLoading"
@@ -124,180 +96,54 @@
       style="width: 100%;"
       @sort-change="sortChange"
     >
-      <!-- <el-table-column
-        label="ID"
-        prop="id"
-        sortable="custom"
-        align="center"
-        width="80"
-        :class-name="getSortClass('id')"
-      >
-        <template slot-scope="{row}">
-          <span>{{ row.id }}</span>
-        </template>
-      </el-table-column> -->
-      <el-table-column label="身份证" width="" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.d.identity_number }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="学校" width="" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.d.department }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="岗位序列" width="" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.d.job_sequence }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="岗位名称" width="" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.d.job_name }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="现职时间" width="" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.d.job_date }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="任现职岗位等级时间" width="" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.d.working_time }}</span>
-        </template>
-      </el-table-column>
-      <!-- <el-table-column label="Title" min-width="150px">
-        <template slot-scope="{row}">
-          <span class="link-type" @click="handleUpdate(row)">{{ row.title }}</span>
-          <el-tag>{{ row.type | typeFilter }}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column label="Author" width="110px" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.author }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column v-if="showReviewer" label="Reviewer" width="110px" align="center">
-        <template slot-scope="{row}">
-          <span style="color:red;">{{ row.reviewer }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="Imp" width="80px">
-        <template slot-scope="{row}">
-          <svg-icon
-            v-for="n in + row.importance"
-            :key="n"
-            icon-class="star"
-            class="meta-item__icon"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column label="Readings" align="center" width="95">
-        <template slot-scope="{row}">
-          <span
-            v-if="row.pageviews"
-            class="link-type"
-            @click="handleFetchPv(row.pageviews)"
-          >{{ row.pageviews }}</span>
-          <span v-else>0</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="Status" class-name="status-col" width="100">
-        <template slot-scope="{row}">
-          <el-tag :type="row.status | statusFilter">{{ row.status }}</el-tag>
-        </template>
-      </el-table-column> -->
-      <el-table-column
-        label="操作"
-        align="center"
-        width="230"
-        class-name="small-padding fixed-width"
-      >
+      <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
-          <el-button type="primary" size="mini" @click="handleUpdate(row)">编辑</el-button>
-          <!-- <el-button
-            v-if="row.status!='published'"
-            size="mini"
-            type="success"
-            @click="handleModifyStatus(row,'published')"
-          >Publish</el-button>
-          <el-button
-            v-if="row.status!='draft'"
-            size="mini"
-            @click="handleModifyStatus(row,'draft')"
-          >Draft</el-button> -->
+          <el-button type="primary" size="mini" @click="handle_update(row)">编辑</el-button>
           <el-button
             v-if="row.status!='deleted'"
             size="mini"
             type="danger"
-            @click="handleDelete(row,$index)"
+            @click="handle_delete(row,$index)"
           >删除</el-button>
+        </template>
+      </el-table-column>
+
+      <el-table-column
+        v-for="table_column_item in my_table_header_list"
+        :key="'table_column'+table_column_item.id"
+        :label="table_column_item.name"
+        width
+        align="center"
+      >
+        <template slot-scope="{row}">
+          <span>{{ row[table_column_item.key] }}</span>
         </template>
       </el-table-column>
     </el-table>
 
-    <pagination
-      v-show="total>0"
-      :total="total"
-      :page.sync="listQuery.page"
-      :limit.sync="listQuery.limit"
-      @pagination="getList"
-    />
-
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form
         ref="dataForm"
-        :rules="rules"
-        :model="temp"
+        :rules="my_rules"
+        :model="my_temp"
         label-position="left"
         label-width="70px"
         style="width: 400px; margin-left:50px;"
       >
-        <el-form-item label="Type" prop="type">
-          <el-select v-model="temp.type" class="filter-item" placeholder="Please select">
-            <el-option
-              v-for="item in calendarTypeOptions"
-              :key="item.key"
-              :label="item.display_name"
-              :value="item.key"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="Date" prop="timestamp">
-          <el-date-picker
-            v-model="temp.timestamp"
-            type="datetime"
-            placeholder="Please pick a date"
-          />
-        </el-form-item>
-        <el-form-item label="Title" prop="title">
-          <el-input v-model="temp.title" />
-        </el-form-item>
-        <el-form-item label="Status">
-          <el-select v-model="temp.status" class="filter-item" placeholder="Please select">
-            <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="Imp">
-          <el-rate
-            v-model="temp.importance"
-            :colors="['#99A9BF', '#F7BA2A', '#FF9900']"
-            :max="3"
-            style="margin-top:8px;"
-          />
-        </el-form-item>
-        <el-form-item label="Remark">
-          <el-input
-            v-model="temp.remark"
-            :autosize="{ minRows: 2, maxRows: 4}"
-            type="textarea"
-            placeholder="Please input"
-          />
+        <el-form-item
+          v-for="(dialog_item,dialog_index) in my_table_header_list"
+          :key="'dialog_'+dialog_index"
+          :label="dialog_item.name"
+          prop="title"
+        >
+          <el-input v-model="my_temp[dialog_item.key]" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">Confirm</el-button>
+        <el-button @click="dialogFormVisible = false">取消</el-button>
+        <el-button v-if="dialogStatus==='create'" @click="create_data()">增加</el-button>
+        <el-button v-if="dialogStatus==='update'" @click="update_data()">修改</el-button>
+        <el-button v-if="dialogStatus==='delete'" @click="delete_data()">删除</el-button>
       </div>
     </el-dialog>
 
@@ -319,269 +165,339 @@ import {
   fetchPv,
   createArticle,
   updateArticle
-} from '@/api/article'
-import waves from '@/directive/waves' // waves directive
-import { parseTime } from '@/utils'
-import Pagination from '@/components/Pagination' // secondary package based on el-pagination
+} from "@/api/article";
+import { Message } from "element-ui";
+import waves from "@/directive/waves"; // waves directive
+import { parseTime } from "@/utils";
+import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
 
 const calendarTypeOptions = [
-  { key: 'CN', display_name: 'China' },
-  { key: 'US', display_name: 'USA' },
-  { key: 'JP', display_name: 'Japan' },
-  { key: 'EU', display_name: 'Eurozone' }
-]
+  { key: "CN", display_name: "China" },
+  { key: "US", display_name: "USA" },
+  { key: "JP", display_name: "Japan" },
+  { key: "EU", display_name: "Eurozone" }
+];
 
 // arr to obj, such as { CN : "China", US : "USA" }
 const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
-  acc[cur.key] = cur.display_name
-  return acc
-}, {})
+  acc[cur.key] = cur.display_name;
+  return acc;
+}, {});
 
 export default {
-  name: 'BaseTable',
+  name: "BaseTable",
   components: { Pagination },
   directives: { waves },
   filters: {
     statusFilter(status) {
       const statusMap = {
-        published: 'success',
-        draft: 'info',
-        deleted: 'danger'
-      }
-      return statusMap[status]
+        published: "success",
+        draft: "info",
+        deleted: "danger"
+      };
+      return statusMap[status];
     },
     typeFilter(type) {
-      return calendarTypeKeyValue[type]
+      return calendarTypeKeyValue[type];
     }
   },
   data() {
     return {
-      search_condition: ['等于', '大于', '小于', '包含'],
-      tableKey: 0,
-      list: null,
-      total: 0,
-      listLoading: false,
-      listQuery: {
-        identity_number: '',
-        department: '',
-        job_sequence: '',
-        job_name: '',
-        job_date: '',
-        working_time: '',
-        identity_number_condition: '',
-        department_condition: '',
-        job_sequence_condition: '',
-        job_name_condition: '',
-        job_date_condition: '',
-        working_time_condition: ''
-        // job_day:'',
-        // page: 1,
-        // limit: 20,
-        // importance: undefined,
-        // title: undefined,
-        // type: undefined,
-        // sort: '+id'
-      },
+      method_dict:{table_name:'职业资格名称'},
+      my_filter_list: [],
+      export_excel_header_name_list: [],
+      export_excel_header_key_list: [],
       importanceOptions: [1, 2, 3],
       calendarTypeOptions,
       sortOptions: [
-        { label: 'ID Ascending', key: '+id' },
-        { label: 'ID Descending', key: '-id' }
+        { label: "ID Ascending", key: "+id" },
+        { label: "ID Descending", key: "-id" }
       ],
-      statusOptions: ['published', 'draft', 'deleted'],
+      search_condition: ["等于", "大于", "小于", "包含", "不包含"],
+      tableKey: 0,
+      my_table_header_list: [],
+      list: null,
+      total: 0,
+      listLoading: false,
+      importanceOptions: [1, 2, 3],
+      calendarTypeOptions,
+      sortOptions: [
+        { label: "ID Ascending", key: "+id" },
+        { label: "ID Descending", key: "-id" }
+      ],
+      statusOptions: ["published", "draft", "deleted"],
       showReviewer: false,
       temp: {
         id: undefined,
         importance: 1,
-        remark: '',
+        remark: "",
         timestamp: new Date(),
-        title: '',
-        type: '',
-        status: 'published'
+        title: "",
+        type: "",
+        status: "published"
       },
+      my_temp: {},
       dialogFormVisible: false,
-      dialogStatus: '',
+      dialogStatus: "",
       textMap: {
-        update: 'Edit',
-        create: 'Create'
+        update: "修改",
+        create: "新增"
       },
       dialogPvVisible: false,
       pvData: [],
+      my_rules: {},
       rules: {
         type: [
-          { required: true, message: 'type is required', trigger: 'change' }
+          { required: true, message: "type is required", trigger: "change" }
         ],
         timestamp: [
           {
-            type: 'date',
+            type: "date",
             required: true,
-            message: 'timestamp is required',
-            trigger: 'change'
+            message: "timestamp is required",
+            trigger: "change"
           }
         ],
         title: [
-          { required: true, message: 'title is required', trigger: 'blur' }
+          { required: true, message: "title is required", trigger: "blur" }
         ]
       },
       downloadLoading: false
-    }
+    };
   },
   created() {
-    // this.getList()
+    this.init();
   },
   methods: {
+    handle_delete(row, index) {
+      this.my_temp = Object.assign({}, row); // copy obj
+      this.dialogStatus = "delete";
+      this.dialogFormVisible = true;
+    },
+    delete_data(){
+      baseInfofetchList({
+        method_dict:this.method_dict,
+        code: 4,
+        message: "删除数据",
+        data: { my_temp: this.my_temp },
+      }).then(response => {
+        this.dialogFormVisible = false;
+        this.getList();
+        console.log(response.data)
+      });
+    },
+    reset_temp() {
+      this.my_temp = {};
+    },
+    handle_create() {
+      this.reset_temp();
+      this.dialogStatus = "create";
+      this.dialogFormVisible = true;
+    },
+    create_data() {
+      console.log("create_data", this.my_temp);
+      baseInfofetchList({
+        method_dict:this.method_dict,
+        code: 3,
+        message: "新增一行",
+        data: { my_temp: this.my_temp }
+      }).then(response => {
+        this.dialogFormVisible = false;
+        // console.log(response.data)
+      });
+    },
+    handle_update(row) {
+      console.log(row);
+      this.my_temp = Object.assign({}, row); // copy obj
+      // this.my_temp.timestamp = new Date(this.temp.timestamp);
+      this.dialogStatus = "update";
+      this.dialogFormVisible = true;
+      // this.$nextTick(() => {
+      //   this.$refs["dataForm"].clearValidate();
+      // });
+    },
+    update_data() {
+      console.log("update_data", this.my_temp);
+      baseInfofetchList({
+        method_dict:this.method_dict,
+        code: 5,
+        message: "修改数据",
+        data: { my_temp: this.my_temp }
+      }).then(response => {
+        this.dialogFormVisible = false;
+        this.getList();
+        console.log(response.data)
+      });
+    },
+    init() {
+      this.listLoading = true;
+      baseInfofetchList({
+        method_dict:this.method_dict,
+        code: 1,
+        message: "初始化基本信息表筛选条件",
+        data: {}
+      }).then(response => {
+        this.my_filter_list = response.data.my_filter_list;
+        this.my_table_header_list = response.data.my_table_header_list;
+        this.export_excel_header_name_list =
+          response.data.export_excel_header_name_list;
+        this.export_excel_header_key_list =
+          response.data.export_excel_header_key_list;
+        // Just to simulate the time of the request
+        setTimeout(() => {
+          this.listLoading = false;
+        }, 1.5 * 1000);
+      });
+    },
     getList() {
-      this.listLoading = true
-      baseInfofetchList({ listQuery: this.listQuery }).then(response => {
-        this.list = response.data.items
-        this.total = response.data.total
+      this.listLoading = true;
+      baseInfofetchList({
+        method_dict:this.method_dict,
+        code: 2,
+        message: "查询基本信息表信息",
+        data: { my_filter_list: this.my_filter_list }
+      }).then(response => {
+        this.list = response.data.my_table_list;
+        this.total = response.data.total;
 
         // Just to simulate the time of the request
         setTimeout(() => {
-          this.listLoading = false
-        }, 1.5 * 1000)
-      })
+          this.listLoading = false;
+        }, 1.5 * 1000);
+      });
     },
     handleFilter() {
-      // this.listQuery.page = 1
-      this.getList()
+      this.getList();
     },
     handleModifyStatus(row, status) {
       this.$message({
-        message: '操作Success',
-        type: 'success'
-      })
-      row.status = status
+        message: "操作Success",
+        type: "success"
+      });
+      row.status = status;
     },
     sortChange(data) {
-      const { prop, order } = data
-      if (prop === 'id') {
-        this.sortByID(order)
+      const { prop, order } = data;
+      if (prop === "id") {
+        this.sortByID(order);
       }
-    },
-    sortByID(order) {
-      if (order === 'ascending') {
-        this.listQuery.sort = '+id'
-      } else {
-        this.listQuery.sort = '-id'
-      }
-      this.handleFilter()
     },
     resetTemp() {
       this.temp = {
         id: undefined,
         importance: 1,
-        remark: '',
+        remark: "",
         timestamp: new Date(),
-        title: '',
-        status: 'published',
-        type: ''
-      }
+        title: "",
+        status: "published",
+        type: ""
+      };
     },
     handleCreate() {
-      this.resetTemp()
-      this.dialogStatus = 'create'
-      this.dialogFormVisible = true
+      this.resetTemp();
+      this.dialogStatus = "create";
+      this.dialogFormVisible = true;
       this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
-      })
+        this.$refs["dataForm"].clearValidate();
+      });
     },
     createData() {
-      this.$refs['dataForm'].validate(valid => {
+      this.$refs["dataForm"].validate(valid => {
         if (valid) {
-          this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
-          this.temp.author = 'vue-element-admin'
+          this.temp.id = parseInt(Math.random() * 100) + 1024; // mock a id
+          this.temp.author = "vue-element-admin";
           createArticle(this.temp).then(() => {
-            this.list.unshift(this.temp)
-            this.dialogFormVisible = false
+            this.list.unshift(this.temp);
+            this.dialogFormVisible = false;
             this.$notify({
-              title: 'Success',
-              message: 'Created Successfully',
-              type: 'success',
+              title: "Success",
+              message: "Created Successfully",
+              type: "success",
               duration: 2000
-            })
-          })
+            });
+          });
         }
-      })
+      });
     },
     handleUpdate(row) {
-      this.temp = Object.assign({}, row) // copy obj
-      this.temp.timestamp = new Date(this.temp.timestamp)
-      this.dialogStatus = 'update'
-      this.dialogFormVisible = true
+      this.temp = Object.assign({}, row); // copy obj
+      this.temp.timestamp = new Date(this.temp.timestamp);
+      this.dialogStatus = "update";
+      this.dialogFormVisible = true;
       this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
-      })
+        this.$refs["dataForm"].clearValidate();
+      });
     },
     updateData() {
-      this.$refs['dataForm'].validate(valid => {
+      this.$refs["dataForm"].validate(valid => {
         if (valid) {
-          const tempData = Object.assign({}, this.temp)
-          tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
+          const tempData = Object.assign({}, this.temp);
+          tempData.timestamp = +new Date(tempData.timestamp); // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
           updateArticle(tempData).then(() => {
-            const index = this.list.findIndex(v => v.id === this.temp.id)
-            this.list.splice(index, 1, this.temp)
-            this.dialogFormVisible = false
+            const index = this.list.findIndex(v => v.id === this.temp.id);
+            this.list.splice(index, 1, this.temp);
+            this.dialogFormVisible = false;
             this.$notify({
-              title: 'Success',
-              message: 'Update Successfully',
-              type: 'success',
+              title: "Success",
+              message: "Update Successfully",
+              type: "success",
               duration: 2000
-            })
-          })
+            });
+          });
         }
-      })
+      });
     },
+
     handleDelete(row, index) {
       this.$notify({
-        title: 'Success',
-        message: 'Delete Successfully',
-        type: 'success',
+        title: "Success",
+        message: "Delete Successfully",
+        type: "success",
         duration: 2000
-      })
-      this.list.splice(index, 1)
+      });
+      this.list.splice(index, 1);
     },
     handleFetchPv(pv) {
       fetchPv(pv).then(response => {
-        this.pvData = response.data.pvData
-        this.dialogPvVisible = true
-      })
+        this.pvData = response.data.pvData;
+        this.dialogPvVisible = true;
+      });
     },
     handleDownload() {
-      this.downloadLoading = true
-      import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
-        const filterVal = [
-          'timestamp',
-          'title',
-          'type',
-          'importance',
-          'status'
-        ]
-        const data = this.formatJson(filterVal)
-        excel.export_json_to_excel({
-          header: tHeader,
-          data,
-          filename: 'table-list'
-        })
-        this.downloadLoading = false
-      })
+      console.log("handleDownload===", this.list);
+      if (this.list == null || this.list == [] || this.list == "") {
+        Message({
+          message: "没有数据可下载!",
+          type: "error",
+          duration: 5 * 1000
+        });
+      } else {
+        this.downloadLoading = true;
+        import("@/vendor/Export2Excel").then(excel => {
+          const tHeader = this.export_excel_header_name_list;
+          const filterVal = this.export_excel_header_key_list;
+          const data = this.formatJson(filterVal);
+          excel.export_json_to_excel({
+            header: tHeader,
+            data,
+            filename: "table-list"
+          });
+          this.downloadLoading = false;
+        });
+      }
     },
     formatJson(filterVal) {
       return this.list.map(v =>
         filterVal.map(j => {
-          if (j === 'timestamp') {
-            return parseTime(v[j])
-          } else {
-            return v[j]
-          }
+          return v[j];
+          // if (j === "timestamp") {
+          //   return parseTime(v[j]);
+          // } else {
+          //   return v[j];
+          // }
         })
-      )
-    },
-    getSortClass: function(key) {
-      const sort = this.listQuery.sort
-      return sort === `+${key}` ? 'ascending' : 'descending'
+      );
     }
   }
-}
+};
 </script>

@@ -203,6 +203,7 @@ export default {
   },
   data() {
     return {
+      method_dict:{table_name:'基本信息'},
       my_filter_list: [],
       export_excel_header_name_list: [],
       export_excel_header_key_list: [],
@@ -275,9 +276,10 @@ export default {
     },
     delete_data(){
       baseInfofetchList({
+        method_dict:this.method_dict,
         code: 4,
         message: "删除数据",
-        data: { my_temp: this.my_temp }
+        data: { my_temp: this.my_temp },
       }).then(response => {
         this.dialogFormVisible = false;
         this.getList();
@@ -295,6 +297,7 @@ export default {
     create_data() {
       console.log("create_data", this.my_temp);
       baseInfofetchList({
+        method_dict:this.method_dict,
         code: 3,
         message: "新增一行",
         data: { my_temp: this.my_temp }
@@ -315,10 +318,21 @@ export default {
     },
     update_data() {
       console.log("update_data", this.my_temp);
+      baseInfofetchList({
+        method_dict:this.method_dict,
+        code: 5,
+        message: "修改数据",
+        data: { my_temp: this.my_temp }
+      }).then(response => {
+        this.dialogFormVisible = false;
+        this.getList();
+        console.log(response.data)
+      });
     },
     init() {
       this.listLoading = true;
       baseInfofetchList({
+        method_dict:this.method_dict,
         code: 1,
         message: "初始化基本信息表筛选条件",
         data: {}
@@ -338,6 +352,7 @@ export default {
     getList() {
       this.listLoading = true;
       baseInfofetchList({
+        method_dict:this.method_dict,
         code: 2,
         message: "查询基本信息表信息",
         data: { my_filter_list: this.my_filter_list }

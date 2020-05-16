@@ -1,4 +1,4 @@
-import { upload_canteen_list } from '@/api/upload-excel'
+import { upload_canteen_list,upload_excel_data } from '@/api/upload-excel'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
@@ -8,13 +8,13 @@ const state = {
   avatar: '',
   introduction: '',
   roles: [],
-  message:'',
+  message: '',
 }
 
 const mutations = {
-    SET_MESSAGE:(state,message) => {
-        state.message = message
-    },
+  SET_MESSAGE: (state, message) => {
+    state.message = message
+  },
   SET_TOKEN: (state, token) => {
     state.token = token
   },
@@ -33,15 +33,33 @@ const mutations = {
 }
 
 const actions = {
-    upload_canteen_list_charge({ commit }, in_data) {
+  handle_button({ commit }, in_data) {
     let token = state.token
     return new Promise((resolve, reject) => {
-        upload_canteen_list({ 
-            data:in_data.data,
-            flag:in_data.flag,
-            key:in_data.key,
-            token:in_data.token,
-        }).then(response => {
+      upload_excel_data({
+        data: in_data.data,
+        flag: in_data.flag,
+        key: in_data.key,
+        token: in_data.token,
+      }).then(response => {
+        const { message } = response
+        commit('SET_MESSAGE', message)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+
+  upload_canteen_list_charge({ commit }, in_data) {
+    let token = state.token
+    return new Promise((resolve, reject) => {
+      upload_canteen_list({
+        data: in_data.data,
+        flag: in_data.flag,
+        key: in_data.key,
+        token: in_data.token,
+      }).then(response => {
         const { message } = response
         console.log('store upload_canteen_list_charge --------------------', message)
         commit('SET_MESSAGE', message)
@@ -55,12 +73,12 @@ const actions = {
 
   upload_canteen_list_add_member({ commit }, in_data) {
     return new Promise((resolve, reject) => {
-        upload_canteen_list({ 
-            data:in_data.data,
-            flag:in_data.flag,
-            key:in_data.key,
-            token:in_data.token,
-        }).then(response => {
+      upload_canteen_list({
+        data: in_data.data,
+        flag: in_data.flag,
+        key: in_data.key,
+        token: in_data.token,
+      }).then(response => {
         const { message } = response
         console.log('store upload_canteen_list_charge --------------------', message)
         commit('SET_MESSAGE', message)
@@ -73,12 +91,12 @@ const actions = {
 
   query_res({ commit }, in_data) {
     return new Promise((resolve, reject) => {
-        upload_canteen_list({ 
-            data:in_data.data,
-            flag:in_data.flag,
-            key:in_data.key,
-            token:in_data.token,
-        }).then(response => {
+      upload_canteen_list({
+        data: in_data.data,
+        flag: in_data.flag,
+        key: in_data.key,
+        token: in_data.token,
+      }).then(response => {
         const { message } = response
         console.log('store query_res --------------------', message)
         commit('SET_MESSAGE', message)
@@ -88,7 +106,7 @@ const actions = {
       })
     })
   },
-  
+
 }
 
 export default {
